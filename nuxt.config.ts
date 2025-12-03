@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
 
+// Trigger rebuild for config changes - TS installed
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   css: ['./app/assets/css/main.css'],

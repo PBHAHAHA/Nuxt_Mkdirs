@@ -96,8 +96,8 @@ useSeoMeta({
 
       <!-- Items grid -->
       <template v-else>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <ItemCard2
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ItemCard
             v-for="item in items"
             :key="item._id"
             :item="item"

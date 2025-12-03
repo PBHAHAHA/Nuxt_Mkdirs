@@ -46,6 +46,7 @@
     "sanity": "^4.19.0",
     "sanity-plugin-asset-source-unsplash": "^4.0.1",
     "sanity-plugin-markdown": "^6.0.0",
-    "sanity-plugin-media": "^4.0.0"
+    "sanity-plugin-media": "^4.0.0",
+    "typescript": "^5.9.3"
   }
 }
