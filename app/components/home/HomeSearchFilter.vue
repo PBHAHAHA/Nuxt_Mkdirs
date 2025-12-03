@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { Search, RefreshCw } from 'lucide-vue-next';
+import type { DateRange } from 'radix-vue';
+
 interface FilterOption {
   value: string;
   label: string;
@@ -8,49 +11,74 @@ interface Props {
   tags?: FilterOption[];
   categories?: FilterOption[];
   urlPrefix?: string;
+  showDatePicker?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   tags: () => [],
   categories: () => [],
   urlPrefix: '/',
+  showDatePicker: true,
 });
 
 const route = useRoute();
 const router = useRouter();
 
-const selectedCategory = computed(() => (route.query.category as string) || '');
-const selectedTags = computed({
-  get: () => {
-    const tagParam = route.query.tag as string;
-    return tagParam ? tagParam.split(',') : [];
-  },
-  set: (val: string[]) => {
-    handleFilterChange('tag', val.length > 0 ? val.join(',') : '');
-  },
+const searchQuery = ref((route.query.q as string) || '');
+const selectedFilter = computed({
+  get: () => (route.query.f as string) || '',
+  set: (val: string) => handleFilterChange('f', val),
 });
 const selectedSort = computed({
   get: () => (route.query.sort as string) || '',
   set: (val: string) => handleFilterChange('sort', val),
 });
-const selectedFilter = computed({
-  get: () => (route.query.f as string) || '',
-  set: (val: string) => handleFilterChange('f', val),
-});
 
 const sortOptions: FilterOption[] = [
-  { value: '', label: 'Sort by Time (desc)' },
-  { value: 'time-asc', label: 'Sort by Time (asc)' },
-  { value: 'name-asc', label: 'Sort by Name (A-Z)' },
-  { value: 'name-desc', label: 'Sort by Name (Z-A)' },
+  { value: '', label: 'Default (featured, time dsc)' },
+  { value: 'time-asc', label: 'Time (asc)' },
+  { value: 'name-asc', label: 'Name (A-Z)' },
+  { value: 'name-desc', label: 'Name (Z-A)' },
 ];
 
+// Date range state - sync with URL
+const selectedDateRange = ref<DateRange>();
+
+// Format date to YYYY-MM-DD string
+function formatDateToString(date: any): string {
+  const d = date.toDate(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Watch date range changes and update URL
+watch(selectedDateRange, (newRange) => {
+  const newQuery = { ...route.query };
+  
+  if (newRange?.start && newRange?.end) {
+    newQuery.dateFrom = formatDateToString(newRange.start);
+    newQuery.dateTo = formatDateToString(newRange.end);
+  } else {
+    delete newQuery.dateFrom;
+    delete newQuery.dateTo;
+  }
+  
+  delete newQuery.page;
+  router.push({ path: props.urlPrefix, query: newQuery });
+}, { deep: true });
+
 const filterOptions: FilterOption[] = [
-  { value: '', label: 'No Filter' },
+  { value: '', label: 'All' },
   { value: 'featured', label: 'Featured' },
   { value: 'free', label: 'Free' },
   { value: 'paid', label: 'Paid' },
 ];
+
+function handleSearch() {
+  handleFilterChange('q', searchQuery.value);
+}
 
 function handleFilterChange(type: string, value: string) {
   const newQuery = { ...route.query };
@@ -67,53 +95,63 @@ function handleFilterChange(type: string, value: string) {
 }
 
 function handleReset() {
+  searchQuery.value = '';
+  selectedDateRange.value = undefined;
   router.push(props.urlPrefix);
 }
-
-// For mobile category select
-const categoryOptions = computed(() => [
-  { value: '', label: 'All Categories' },
-  ...props.categories,
-]);
 </script>
 
 <template>
-  <div class="grid md:grid-cols-[1fr_1fr_1fr_0.5fr] gap-4 z-10 items-center">
-    <!-- Mobile: Category Select -->
-    <div class="flex md:hidden">
-      <UiComboBox
-        :options="categoryOptions"
-        :model-value="selectedCategory"
-        placeholder="All Categories"
-        @update:model-value="handleFilterChange('category', $event)"
+  <div :class="[
+    'grid grid-cols-1 gap-4 z-10 items-center',
+    showDatePicker ? 'md:grid-cols-[1fr_0.6fr_0.8fr_0.6fr_auto]' : 'md:grid-cols-[1fr_0.6fr_0.8fr_auto]'
+  ]">
+    <!-- Search Input -->
+    <div class="relative">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Search..."
+        class="w-full h-10 rounded-lg border border-input bg-background px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring pr-10"
+        @keydown.enter="handleSearch"
       />
+      <Search class="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground" />
     </div>
 
-    <!-- Tags MultiSelect -->
-    <UiMultiSelect
-      v-model="selectedTags"
-      :options="tags"
-      placeholder="Select tags"
-      :max-count="1"
-    />
-
-    <!-- Filter Select -->
+    <!-- Filter Select (Featured/Free/Paid) -->
     <UiComboBox
-      v-model="selectedFilter"
       :options="filterOptions"
-      placeholder="No Filter"
+      :model-value="selectedFilter"
+      placeholder="Featured"
+      @update:model-value="handleFilterChange('f', $event)"
+      class="w-full rounded-lg shadow-none"
     />
 
-    <!-- Sort Select -->
+    <!-- Sort Select (Default/Time/Name) -->
     <UiComboBox
-      v-model="selectedSort"
       :options="sortOptions"
-      placeholder="Sort by Time (desc)"
+      :model-value="selectedSort"
+      placeholder="Default (featured, time dsc)"
+      @update:model-value="handleFilterChange('sort', $event)"
+      class="w-full rounded-lg shadow-none"
+    />
+
+    <!-- Date Range Picker -->
+    <UiDateRangePicker
+      v-if="showDatePicker"
+      v-model="selectedDateRange"
+      placeholder="Select Date"
+      class="w-full"
     />
 
     <!-- Reset Button -->
-    <UiButton variant="outline" @click="handleReset">
-      Reset
+    <UiButton
+      variant="outline"
+      class="h-10 w-10 rounded-lg p-0 shadow-none"
+      @click="handleReset"
+    >
+      <RefreshCw class="h-4 w-4" />
+      <span class="sr-only">Reset</span>
     </UiButton>
   </div>
 </template>

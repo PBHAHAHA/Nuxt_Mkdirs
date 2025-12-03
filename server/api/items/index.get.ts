@@ -10,6 +10,8 @@ export default defineEventHandler(async (event) => {
   const sort = query.sort as string | undefined;
   const filter = query.f as string | undefined;
   const searchQuery = query.q as string | undefined;
+  const dateFrom = query.dateFrom as string | undefined;
+  const dateTo = query.dateTo as string | undefined;
 
   try {
     // Build query based on filters
@@ -53,6 +55,19 @@ export default defineEventHandler(async (event) => {
       groqQuery += ` && (pricePlan == "free" || !defined(pricePlan))`;
     } else if (filter === 'paid') {
       groqQuery += ` && pricePlan == "paid"`;
+    }
+
+    // Date range filter (based on publishDate)
+    if (dateFrom && dateTo) {
+      groqQuery += ` && publishDate >= $dateFrom && publishDate <= $dateTo`;
+      params.dateFrom = dateFrom;
+      params.dateTo = dateTo;
+    } else if (dateFrom) {
+      groqQuery += ` && publishDate >= $dateFrom`;
+      params.dateFrom = dateFrom;
+    } else if (dateTo) {
+      groqQuery += ` && publishDate <= $dateTo`;
+      params.dateTo = dateTo;
     }
 
     groqQuery += `]`;

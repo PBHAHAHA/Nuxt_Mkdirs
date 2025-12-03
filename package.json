@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
+    "@internationalized/date": "^3.10.0",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/sanity": "^2.0.0",
     "@sanity/image-url": "^1.0.2",

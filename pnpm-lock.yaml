@@ -11,6 +11,9 @@ importers:
       '@auth/core':
         specifier: ^0.34.2
         version: 0.34.3
+      '@internationalized/date':
+        specifier: ^3.10.0
+        version: 3.10.0
       '@nuxtjs/color-mode':
         specifier: ^3.5.2
         version: 3.5.2(magicast@0.5.1)

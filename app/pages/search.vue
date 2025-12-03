@@ -10,6 +10,8 @@ const itemsQuery = computed(() => ({
   sort: route.query.sort || undefined,
   f: route.query.f || undefined,
   page: route.query.page || undefined,
+  dateFrom: route.query.dateFrom || undefined,
+  dateTo: route.query.dateTo || undefined,
 }));
 
 // Fetch items from Sanity - reactive to URL changes

@@ -11,6 +11,7 @@ interface Props {
   options: Option[];
   modelValue?: string;
   placeholder?: string;
+  class?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -61,10 +62,11 @@ onUnmounted(() => {
     <button
       type="button"
       :class="cn(
-        'flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm',
+        'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm',
         'ring-offset-background',
         'focus:outline-none focus:ring-1 focus:ring-ring',
-        'disabled:cursor-not-allowed disabled:opacity-50'
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        props.class
       )"
       @click="isOpen = !isOpen"
     >

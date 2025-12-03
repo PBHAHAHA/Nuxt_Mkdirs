@@ -109,7 +109,7 @@ useSeoMeta({
       <!-- Right content: filter + item grid -->
       <div class="flex-1 flex flex-col gap-8">
         <!-- Search Filter -->
-        <HomeSearchFilter :tags="tags" :categories="categoryOptions" url-prefix="/home2" />
+        <HomeSearchFilter :tags="tags" :categories="categoryOptions" url-prefix="/home2" :show-date-picker="false" />
 
         <!-- Item Grid -->
         <SharedEmptyState v-if="items.length === 0" />
