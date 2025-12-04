@@ -43,6 +43,9 @@ export default defineNuxtConfig({
     resendEmailAdmin: process.env.NUXT_RESEND_EMAIL_ADMIN,
     stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
+    creemApiKey: process.env.NUXT_CREEM_API_KEY,
+    creemWebhookSecret: process.env.NUXT_CREEM_WEBHOOK_SECRET,
+    creemTestMode: process.env.NUXT_CREEM_TEST_MODE === 'true',
     authSecret: process.env.NUXT_AUTH_SECRET,
     authGoogleClientId: process.env.NUXT_AUTH_GOOGLE_CLIENT_ID,
     authGoogleClientSecret: process.env.NUXT_AUTH_GOOGLE_CLIENT_SECRET,
@@ -61,6 +64,8 @@ export default defineNuxtConfig({
       stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
       stripeProPriceId: process.env.NUXT_PUBLIC_STRIPE_PRO_PRICE_ID,
       stripeSponsorPriceId: process.env.NUXT_PUBLIC_STRIPE_SPONSOR_PRICE_ID,
+      creemProProductId: process.env.NUXT_PUBLIC_CREEM_PRO_PRODUCT_ID,
+      creemSponsorProductId: process.env.NUXT_PUBLIC_CREEM_SPONSOR_PRODUCT_ID,
       googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
       // Feature flags
       supportCategoryGroup: process.env.NUXT_PUBLIC_SUPPORT_CATEGORY_GROUP !== 'false', // default true

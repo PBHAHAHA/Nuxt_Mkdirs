@@ -31,8 +31,25 @@ export default defineEventHandler(async (event) => {
 
   const data = validatedFields.data;
 
-  // TODO: Get user from session (for now, submitter is optional)
-  const userId = body.userId;
+  // Get user from session
+  const sessionToken = getCookie(event, 'auth-token');
+  if (!sessionToken) {
+    throw createError({
+      statusCode: 401,
+      message: 'Please login to submit',
+    });
+  }
+
+  let userId: string;
+  try {
+    const sessionData = JSON.parse(Buffer.from(sessionToken, 'base64').toString('utf-8'));
+    userId = sessionData.id;
+  } catch {
+    throw createError({
+      statusCode: 401,
+      message: 'Invalid session',
+    });
+  }
 
   try {
     // Generate slug from name
@@ -90,14 +107,11 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    // Add submitter reference only if userId exists and is valid
-    // For now, skip submitter to allow anonymous submissions
-    // if (userId) {
-    //   itemData.submitter = {
-    //     _type: 'reference',
-    //     _ref: userId,
-    //   };
-    // }
+    // Add submitter reference
+    itemData.submitter = {
+      _type: 'reference',
+      _ref: userId,
+    };
 
     // Create item in Sanity
     const item = await sanityClient.create(itemData as any);

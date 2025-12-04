@@ -22,6 +22,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "creem_io": "^0.4.0",
     "date-fns": "^4.1.0",
     "groq": "^3.55.0",
     "lucide-vue-next": "^0.511.0",
