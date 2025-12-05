@@ -9,7 +9,7 @@ export const heroConfig: HeroConfig = {
     "This is a demo directory website built with Nuxt Mkdirs",
   label: {
     text: "Introducing Nuxt Mkdirs on",
-    href: "https://x.com/javayhu",
+    href: "https://x.com/zhirentegong",
     icon: "twitter",
   },
 };
