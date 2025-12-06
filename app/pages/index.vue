@@ -72,7 +72,7 @@ useSeoMeta({
 <template>
   <LayoutContainer class="mt-12 mb-16 flex flex-col gap-12">
     <!-- Hero -->
-    <HomeHero url-prefix="/" />
+    <HomeHero url-prefix="/search" />
 
     <!-- Content Sections -->
     <div class="flex flex-col gap-12">
