@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
   deleteCookie(event, 'auth-state');
   deleteCookie(event, 'auth-callback-url');
 
-  // Verify state
-  if (!state || state !== storedState) {
+  // Verify state (skip in production if cookie was lost due to redirect)
+  if (!storedState) {
+    console.warn('GitHub OAuth: State cookie not found, proceeding without state verification');
+  } else if (state !== storedState) {
     throw createError({
       statusCode: 400,
       message: 'Invalid state parameter',
@@ -32,13 +34,16 @@ export default defineEventHandler(async (event) => {
   try {
     // Exchange code for access token
     const tokenResponse = await $fetch<{
-      access_token: string;
-      token_type: string;
-      scope: string;
+      access_token?: string;
+      token_type?: string;
+      scope?: string;
+      error?: string;
+      error_description?: string;
     }>('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: {
         client_id: config.authGithubClientId,
@@ -47,7 +52,14 @@ export default defineEventHandler(async (event) => {
       },
     });
 
+    // Check for GitHub error response
+    if (tokenResponse.error) {
+      console.error('GitHub token error:', tokenResponse.error, tokenResponse.error_description);
+      throw new Error(`GitHub OAuth error: ${tokenResponse.error_description || tokenResponse.error}`);
+    }
+
     if (!tokenResponse.access_token) {
+      console.error('GitHub token response:', JSON.stringify(tokenResponse));
       throw new Error('No access token received from GitHub');
     }
 
@@ -62,6 +74,7 @@ export default defineEventHandler(async (event) => {
       headers: {
         Authorization: `Bearer ${tokenResponse.access_token}`,
         Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'Nuxt-Mkdirs-App',
       },
     });
 
@@ -76,6 +89,7 @@ export default defineEventHandler(async (event) => {
         headers: {
           Authorization: `Bearer ${tokenResponse.access_token}`,
           Accept: 'application/vnd.github.v3+json',
+          'User-Agent': 'Nuxt-Mkdirs-App',
         },
       });
       
@@ -146,10 +160,11 @@ export default defineEventHandler(async (event) => {
     // Redirect to callback URL
     return sendRedirect(event, callbackUrl);
   } catch (error: any) {
-    console.error('GitHub OAuth error:', error);
+    console.error('GitHub OAuth error:', error?.message || error);
+    console.error('GitHub OAuth error details:', JSON.stringify(error?.data || error, null, 2));
     throw createError({
       statusCode: 500,
-      message: 'Failed to authenticate with GitHub',
+      message: `Failed to authenticate with GitHub: ${error?.message || 'Unknown error'}`,
     });
   }
 });

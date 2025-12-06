@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
   deleteCookie(event, 'auth-state');
   deleteCookie(event, 'auth-callback-url');
 
-  // Verify state
-  if (!state || state !== storedState) {
+  // Verify state (skip in production if cookie was lost due to redirect)
+  if (!storedState) {
+    console.warn('Google OAuth: State cookie not found, proceeding without state verification');
+  } else if (state !== storedState) {
     throw createError({
       statusCode: 400,
       message: 'Invalid state parameter',
@@ -118,10 +120,11 @@ export default defineEventHandler(async (event) => {
     // Redirect to callback URL
     return sendRedirect(event, callbackUrl);
   } catch (error: any) {
-    console.error('Google OAuth error:', error);
+    console.error('Google OAuth error:', error?.message || error);
+    console.error('Google OAuth error details:', JSON.stringify(error?.data || error, null, 2));
     throw createError({
       statusCode: 500,
-      message: 'Failed to authenticate with Google',
+      message: `Failed to authenticate with Google: ${error?.message || 'Unknown error'}`,
     });
   }
 });

@@ -32,13 +32,12 @@ export default defineEventHandler(async (event) => {
 
   // Build Google OAuth URL
   const redirectUri = `${config.public.appUrl}/api/auth/callback/google`;
-  const scope = encodeURIComponent('openid email profile');
   
   const googleAuthUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   googleAuthUrl.searchParams.set('client_id', config.authGoogleClientId);
   googleAuthUrl.searchParams.set('redirect_uri', redirectUri);
   googleAuthUrl.searchParams.set('response_type', 'code');
-  googleAuthUrl.searchParams.set('scope', scope);
+  googleAuthUrl.searchParams.set('scope', 'openid email profile');
   googleAuthUrl.searchParams.set('state', state);
   googleAuthUrl.searchParams.set('access_type', 'offline');
   googleAuthUrl.searchParams.set('prompt', 'consent');
