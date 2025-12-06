@@ -11,7 +11,29 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxtjs/color-mode',
     '@nuxtjs/sanity',
+    '@nuxtjs/sitemap',
   ],
+
+  // Sitemap configuration
+  // https://nuxtseo.com/sitemap/getting-started/installation
+  sitemap: {
+    // Exclude admin/dashboard routes from sitemap
+    exclude: [
+      '/dashboard/**',
+      '/studio/**',
+      '/auth/**',
+    ],
+  },
+
+  // Robots configuration (via routeRules)
+  routeRules: {
+    // Allow all pages to be indexed by default
+    '/**': { robots: 'index, follow' },
+    // Disallow dashboard and auth pages
+    '/dashboard/**': { robots: 'noindex, nofollow' },
+    '/studio/**': { robots: 'noindex, nofollow' },
+    '/auth/**': { robots: 'noindex, nofollow' },
+  },
 
   hub: {
     // NuxtHub configuration

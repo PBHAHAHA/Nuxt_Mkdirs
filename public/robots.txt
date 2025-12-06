@@ -1,2 +1,20 @@
+# ============================================
+# ROBOTS.TXT
+# ============================================
+# 
+# This file tells search engine crawlers which pages to index.
+# Update the Sitemap URL to your production domain.
+#
+# Learn more: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+
 User-Agent: *
-Disallow:
+Allow: /
+
+# Disallow admin and private pages
+Disallow: /dashboard/
+Disallow: /studio/
+Disallow: /auth/
+Disallow: /api/
+
+# Sitemap location (update with your domain)
+Sitemap: https://your-domain.com/sitemap.xml

@@ -20,6 +20,55 @@ export type SiteConfig = {
     twitter?: string;
     youtube?: string;
   };
+  // SEO Configuration
+  seo: SeoConfig;
+};
+
+// SEO Configuration Types
+export type SeoConfig = {
+  // Basic SEO
+  titleTemplate: string; // e.g., "%s | Site Name"
+  titleSeparator: string; // e.g., " | "
+  
+  // Open Graph
+  ogType: string; // e.g., "website"
+  ogLocale: string; // e.g., "en_US"
+  
+  // Twitter Card
+  twitterCard: 'summary' | 'summary_large_image' | 'app' | 'player';
+  twitterSite?: string; // e.g., "@username"
+  twitterCreator?: string; // e.g., "@username"
+  
+  // Verification codes (for search console)
+  googleSiteVerification?: string;
+  bingSiteVerification?: string;
+  
+  // Robots
+  robots: {
+    index: boolean;
+    follow: boolean;
+  };
+  
+  // Language
+  language: string; // e.g., "en"
+  
+  // Canonical URL prefix (usually same as site url)
+  canonicalUrl?: string;
+};
+
+// Page-specific SEO options
+export type PageSeoOptions = {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+  canonical?: string;
+  ogType?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
 };
 
 export type HeroConfig = {

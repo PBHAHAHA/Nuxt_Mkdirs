@@ -83,10 +83,15 @@ const blogPosts = computed(() => {
   }));
 });
 
-useSeoMeta({
-  title: 'Nuxt Mkdirs - The Best Directory Website Template',
-  description: 'Alternative home page layout with Latest Products, Featured Products, and Blog Posts.',
+// SEO - using centralized config from site.ts
+useSeo({
+  title: 'Home',
+  description: 'Discover the best tools and resources in our directory. Browse latest products, featured items, and blog posts.',
 });
+
+// Structured data for homepage
+useWebsiteSchema();
+useOrganizationSchema();
 </script>
 
 <template>
