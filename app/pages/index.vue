@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Sparkles, Star, FileText, ArrowRight } from 'lucide-vue-next';
+import { Sparkles, Star, FileText, ArrowRight, Megaphone } from 'lucide-vue-next';
 import { getSanityImageUrl } from '~/utils/sanity-image';
 
 // Fetch latest items from Sanity
@@ -44,6 +44,26 @@ const featuredItems = computed(() => {
   }));
 });
 
+// Fetch sponsor item from Sanity
+const { data: sponsorItemData } = await useFetch('/api/items/sponsor');
+
+const sponsorItem = computed(() => {
+  if (!sponsorItemData.value) return null;
+  const item = sponsorItemData.value;
+  return {
+    _id: item._id,
+    name: item.name,
+    slug: item.slug?.current || item.slug,
+    link: item.link,
+    description: item.description,
+    icon: item.icon,
+    image: item.image,
+    featured: item.featured,
+    tags: item.tags?.map((t: any) => t.name) || [],
+    category: item.categories?.[0]?.name || '',
+  };
+});
+
 // Fetch latest blog posts from Sanity
 const { data: blogPostsData } = await useFetch('/api/blog/latest', {
   query: { count: 8 },
@@ -76,6 +96,20 @@ useSeoMeta({
 
     <!-- Content Sections -->
     <div class="flex flex-col gap-12">
+      <!-- Sponsored -->
+      <section v-if="sponsorItem" class="flex flex-col gap-8">
+        <div class="flex items-center gap-2">
+          <Megaphone class="w-4 h-4 text-primary" />
+          <h2 class="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
+            Sponsored
+          </h2>
+        </div>
+
+        <div class="max-w-md">
+          <ItemSponsorItemCard :item="sponsorItem" />
+        </div>
+      </section>
+
       <!-- Latest Products -->
       <section v-if="latestItems.length > 0" class="flex flex-col gap-8">
         <div class="flex items-center justify-between gap-8">
