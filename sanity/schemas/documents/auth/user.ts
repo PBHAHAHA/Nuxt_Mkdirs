@@ -55,6 +55,22 @@ const user = defineType({
       },
     }),
     defineField({
+      name: "provider",
+      title: "Auth Provider",
+      type: "string",
+      description: "OAuth provider (google, github, credentials)",
+      options: {
+        list: ["credentials", "google", "github"],
+      },
+    }),
+    defineField({
+      name: "providerId",
+      title: "Provider ID",
+      type: "string",
+      description: "User ID from OAuth provider",
+      hidden: true,
+    }),
+    defineField({
       name: "accounts",
       title: "Accounts",
       type: "reference",

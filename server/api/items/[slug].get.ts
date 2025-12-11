@@ -47,7 +47,12 @@ export default defineEventHandler(async (event) => {
             ...,
             "blurDataURL": asset->metadata.lqip,
           },
+          image {
+            ...,
+            "blurDataURL": asset->metadata.lqip,
+          },
           categories[]->,
+          tags[]->,
       },
     }`;
 

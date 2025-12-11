@@ -11,21 +11,30 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxtjs/color-mode',
     '@nuxtjs/sanity',
+    '@nuxtjs/sitemap',
   ],
+
+  // Sitemap configuration
+  // https://nuxtseo.com/sitemap/getting-started/installation
+  sitemap: {
+    // Exclude admin/dashboard routes from sitemap
+    exclude: [
+      '/dashboard/**',
+      '/studio/**',
+      '/auth/**',
+    ],
+  },
+
 
   hub: {
     // NuxtHub configuration
     // https://hub.nuxt.com/docs/getting-started/deploy
   },
 
+  // Sanity configuration
+  // projectId and dataset are read from sanity.config.ts automatically
   sanity: {
-    projectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NUXT_PUBLIC_SANITY_DATASET || 'production',
-    apiVersion: '2024-01-01',
     useCdn: false,
-    visualEditing: {
-      studioUrl: '/studio',
-    },
   },
 
   colorMode: {
@@ -35,43 +44,53 @@ export default defineNuxtConfig({
   },
 
   // Runtime config for environment variables
+  // Nuxt automatically maps NUXT_* env vars to runtimeConfig
+  // https://nuxt.com/docs/guide/going-further/runtime-config#environment-variables
   runtimeConfig: {
-    // Server-side only (private)
-    sanityApiToken: process.env.NUXT_SANITY_API_TOKEN,
-    resendApiKey: process.env.NUXT_RESEND_API_KEY,
-    resendEmailFrom: process.env.NUXT_RESEND_EMAIL_FROM || 'onboarding@resend.dev',
-    resendEmailAdmin: process.env.NUXT_RESEND_EMAIL_ADMIN,
-    stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
-    stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
-    creemApiKey: process.env.NUXT_CREEM_API_KEY,
-    creemWebhookSecret: process.env.NUXT_CREEM_WEBHOOK_SECRET,
-    creemTestMode: process.env.NUXT_CREEM_TEST_MODE === 'true',
-    authSecret: process.env.NUXT_AUTH_SECRET,
-    authGoogleClientId: process.env.NUXT_AUTH_GOOGLE_CLIENT_ID,
-    authGoogleClientSecret: process.env.NUXT_AUTH_GOOGLE_CLIENT_SECRET,
-    authGithubClientId: process.env.NUXT_AUTH_GITHUB_CLIENT_ID,
-    authGithubClientSecret: process.env.NUXT_AUTH_GITHUB_CLIENT_SECRET,
-    googleAiApiKey: process.env.NUXT_GOOGLE_AI_API_KEY,
-    deepseekApiKey: process.env.NUXT_DEEPSEEK_API_KEY,
-    openaiApiKey: process.env.NUXT_OPENAI_API_KEY,
-    aiProvider: process.env.NUXT_AI_PROVIDER || 'google',
+    // Sanity config (used by @nuxtjs/sanity module)
+    sanity: {
+      token: '', // NUXT_SANITY_TOKEN
+    },
 
-    // Client-side (public)
+    // Server-side only (private) - auto-mapped from NUXT_*
+    // e.g., NUXT_SANITY_API_TOKEN -> sanityApiToken
+    sanityApiToken: '',
+    resendApiKey: '',
+    resendEmailFrom: 'onboarding@resend.dev',
+    resendEmailAdmin: '',
+    resendAudienceId: '',
+    stripeSecretKey: '',
+    stripeWebhookSecret: '',
+    creemApiKey: '',
+    creemWebhookSecret: '',
+    creemTestMode: false,
+    authSecret: '',
+    authGoogleClientId: '',
+    authGoogleClientSecret: '',
+    authGithubClientId: '',
+    authGithubClientSecret: '',
+    googleAiApiKey: '',
+    deepseekApiKey: '',
+    openaiApiKey: '',
+    aiProvider: 'google',
+
+    // Client-side (public) - auto-mapped from NUXT_PUBLIC_*
+    // e.g., NUXT_PUBLIC_APP_URL -> public.appUrl
     public: {
-      appUrl: process.env.NUXT_PUBLIC_APP_URL || 'http://localhost:3000',
-      sanityProjectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
-      sanityDataset: process.env.NUXT_PUBLIC_SANITY_DATASET || 'production',
-      stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-      stripeProPriceId: process.env.NUXT_PUBLIC_STRIPE_PRO_PRICE_ID,
-      stripeSponsorPriceId: process.env.NUXT_PUBLIC_STRIPE_SPONSOR_PRICE_ID,
-      creemProProductId: process.env.NUXT_PUBLIC_CREEM_PRO_PRODUCT_ID,
-      creemSponsorProductId: process.env.NUXT_PUBLIC_CREEM_SPONSOR_PRODUCT_ID,
-      googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-      // Feature flags
-      supportCategoryGroup: process.env.NUXT_PUBLIC_SUPPORT_CATEGORY_GROUP !== 'false', // default true
-      supportItemIcon: process.env.NUXT_PUBLIC_SUPPORT_ITEM_ICON !== 'false', // default true
-      supportAiSubmit: process.env.NUXT_PUBLIC_SUPPORT_AI_SUBMIT === 'true', // default false
-      itemsPerPage: Number(process.env.NUXT_PUBLIC_ITEMS_PER_PAGE) || 12,
+      appUrl: 'http://localhost:3000',
+      sanityProjectId: '',
+      sanityDataset: 'production',
+      stripePublishableKey: '',
+      stripeProPriceId: '',
+      stripeSponsorPriceId: '',
+      creemProProductId: '',
+      creemSponsorProductId: '',
+      googleAnalyticsId: '',
+      // Feature flags (these need special handling for boolean/number)
+      supportCategoryGroup: true,
+      supportItemIcon: true,
+      supportAiSubmit: false,
+      itemsPerPage: 12,
     },
   },
 

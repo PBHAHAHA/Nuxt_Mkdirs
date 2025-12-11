@@ -1,22 +1,43 @@
 <script setup lang="ts">
-import { Mail, ArrowRight, Send } from 'lucide-vue-next';
-import { siteConfig } from '~/config/site';
+import { Send } from 'lucide-vue-next';
+
+interface Props {
+  source?: string; // Track where the subscription came from
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  source: 'website',
+});
 
 const email = ref('');
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
+const errorMessage = ref('');
+const successMessage = ref('');
 
 async function handleSubmit() {
   if (!email.value.trim()) return;
   
   isSubmitting.value = true;
+  errorMessage.value = '';
   
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-  isSubmitting.value = false;
-  isSubmitted.value = true;
-  email.value = '';
+  try {
+    const response = await $fetch('/api/newsletter/subscribe', {
+      method: 'POST',
+      body: {
+        email: email.value.trim(),
+        source: props.source,
+      },
+    });
+    
+    isSubmitted.value = true;
+    successMessage.value = response.message || 'Thanks for subscribing!';
+    email.value = '';
+  } catch (error: any) {
+    errorMessage.value = error.data?.message || 'Failed to subscribe. Please try again.';
+  } finally {
+    isSubmitting.value = false;
+  }
 }
 </script>
 
@@ -36,31 +57,40 @@ async function handleSubmit() {
       </div>
       
       <div class="w-full max-w-md">
+        <!-- Success State -->
         <div v-if="isSubmitted" class="text-center">
           <p class="text-lg font-medium text-green-600 dark:text-green-400">
-            🎉 Thanks for subscribing!
+            🎉 {{ successMessage }}
           </p>
           <p class="text-muted-foreground text-sm mt-1">
-            Check your inbox for confirmation.
+            Check your inbox for a welcome email.
           </p>
         </div>
         
-        <form v-else class="relative flex items-center" @submit.prevent="handleSubmit">
-          <input
-            v-model="email"
-            type="email"
-            placeholder="Enter your email"
-            required
-            class="w-full h-12 px-4 rounded-full bg-background border focus:outline-none focus:ring-2 focus:ring-primary pr-36"
-          />
-          <button
-            type="submit"
-            :disabled="isSubmitting"
-            class="absolute right-1 top-1 bottom-1 px-6 rounded-full bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-50"
-          >
-            {{ isSubmitting ? '...' : 'Subscribe' }}
-            <Send v-if="!isSubmitting" class="w-4 h-4" />
-          </button>
+        <!-- Form -->
+        <form v-else class="flex flex-col gap-3" @submit.prevent="handleSubmit">
+          <div class="relative flex items-center">
+            <input
+              v-model="email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              class="w-full h-12 px-4 rounded-full bg-background border focus:outline-none focus:ring-2 focus:ring-primary pr-36"
+            />
+            <button
+              type="submit"
+              :disabled="isSubmitting"
+              class="absolute right-1 top-1 bottom-1 px-6 rounded-full bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              {{ isSubmitting ? '...' : 'Subscribe' }}
+              <Send v-if="!isSubmitting" class="w-4 h-4" />
+            </button>
+          </div>
+          
+          <!-- Error Message -->
+          <p v-if="errorMessage" class="text-sm text-red-500 text-center">
+            {{ errorMessage }}
+          </p>
         </form>
       </div>
     </div>

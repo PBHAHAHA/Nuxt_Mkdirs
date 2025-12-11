@@ -49,9 +49,9 @@ const props = withDefaults(defineProps<Props>(), {
         </div>
       </div>
 
-      <!-- Right: Sponsor card -->
+      <!-- Right: Sponsor card (compact mode) -->
       <div v-if="sponsorItem" class="w-full lg:w-[400px]">
-        <ItemSponsorItemCard :item="sponsorItem" />
+        <ItemSponsorItemCard :item="sponsorItem" compact />
       </div>
     </div>
   </div>

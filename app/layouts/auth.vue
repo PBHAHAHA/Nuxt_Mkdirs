@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowLeft } from 'lucide-vue-next';
+import { siteConfig } from '~/config/site';
 </script>
 
 <template>
@@ -25,12 +26,14 @@ import { ArrowLeft } from 'lucide-vue-next';
       <div class="hidden bg-muted lg:block">
         <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
           <div class="text-center space-y-4 p-8">
-            <div class="w-20 h-20 mx-auto bg-primary rounded-2xl flex items-center justify-center">
-              <span class="text-3xl font-bold text-primary-foreground">D</span>
-            </div>
-            <h2 class="text-2xl font-bold">Directory Template</h2>
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              class="w-20 h-20 mx-auto rounded-2xl"
+            />
+            <h2 class="text-2xl font-bold">{{ siteConfig.name }}</h2>
             <p class="text-muted-foreground max-w-sm">
-              The best directory template for your next project. Built with Nuxt 4 and Tailwind CSS.
+              {{ siteConfig.tagline }}
             </p>
           </div>
         </div>

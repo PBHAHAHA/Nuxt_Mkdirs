@@ -125,7 +125,7 @@ useSeoMeta({
               <div v-else class="w-full h-full bg-muted flex items-center justify-center">
                 <span class="text-4xl font-bold text-muted-foreground/30">{{ item.name?.charAt(0)?.toUpperCase() }}</span>
               </div>
-              <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300">
+              <div class="absolute inset-0 flex items-center justify-center bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300">
                 <span class="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Visit Website
                 </span>

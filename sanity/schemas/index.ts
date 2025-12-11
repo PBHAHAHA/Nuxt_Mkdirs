@@ -13,6 +13,7 @@ import blockContent from "./documents/block-content";
 import page from "./documents/page/page";
 import order from "./documents/order/order";
 import item from "./documents/directory/item";
+import subscriber from "./documents/newsletter/subscriber";
 
 export const schemaTypes = [
   settings,
@@ -30,4 +31,5 @@ export const schemaTypes = [
   page,
   item,
   order,
+  subscriber,
 ];
