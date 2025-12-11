@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🚀 Nuxt Mkdirs
+<img src="./public/logo.png" alt="Nuxt Mkdirs" width="120" />
+
+# Nuxt Mkdirs
 
 **开源的目录网站模板，基于 Nuxt 4 构建**
 

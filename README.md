@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🚀 Nuxt Mkdirs
+<img src="./public/logo.png" alt="Nuxt Mkdirs" width="120" />
+
+# Nuxt Mkdirs
 
 **Open-source directory website template built with Nuxt 4**
 
