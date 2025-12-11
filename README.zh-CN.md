@@ -21,7 +21,6 @@
 - 🔐 **多种认证方式** - Google / GitHub OAuth 登录
 - 💳 **支付集成** - 支持 Stripe 和 Creem（国内友好）
 - 📧 **邮件服务** - Resend 邮件发送 + Newsletter
-- 🤖 **AI 集成** - 支持 Google AI / DeepSeek / OpenAI
 - 🌙 **深色模式** - 自动跟随系统主题
 - 📱 **响应式设计** - 完美适配移动端
 - ⚡ **NuxtHub 部署** - 一键部署到 Cloudflare
@@ -184,21 +183,6 @@ openssl rand -base64 32
 NUXT_AUTH_SECRET=your_generated_secret
 ```
 
-### 5. AI 配置（可选）
-
-```bash
-# 选择 AI 提供商: google, deepseek, openai
-NUXT_AI_PROVIDER=google
-
-# Google AI
-NUXT_GOOGLE_AI_API_KEY=xxxxx
-
-# DeepSeek
-NUXT_DEEPSEEK_API_KEY=xxxxx
-
-# OpenAI
-NUXT_OPENAI_API_KEY=xxxxx
-```
 
 ## 📁 项目结构
 

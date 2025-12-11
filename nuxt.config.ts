@@ -69,10 +69,6 @@ export default defineNuxtConfig({
     authGoogleClientSecret: '',
     authGithubClientId: '',
     authGithubClientSecret: '',
-    googleAiApiKey: '',
-    deepseekApiKey: '',
-    openaiApiKey: '',
-    aiProvider: 'google',
 
     // Client-side (public) - auto-mapped from NUXT_PUBLIC_*
     // e.g., NUXT_PUBLIC_APP_URL -> public.appUrl

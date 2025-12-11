@@ -21,7 +21,6 @@
 - 🔐 **Multiple Auth Methods** - Google / GitHub OAuth login
 - 💳 **Payment Integration** - Supports Stripe and Creem
 - 📧 **Email Service** - Resend for transactional emails + Newsletter
-- 🤖 **AI Integration** - Supports Google AI / DeepSeek / OpenAI
 - 🌙 **Dark Mode** - Auto-follows system theme
 - 📱 **Responsive Design** - Perfect mobile adaptation
 - ⚡ **NuxtHub Deploy** - One-click deploy to Cloudflare
@@ -184,21 +183,6 @@ openssl rand -base64 32
 NUXT_AUTH_SECRET=your_generated_secret
 ```
 
-### 5. AI Configuration (Optional)
-
-```bash
-# Choose AI provider: google, deepseek, openai
-NUXT_AI_PROVIDER=google
-
-# Google AI
-NUXT_GOOGLE_AI_API_KEY=xxxxx
-
-# DeepSeek
-NUXT_DEEPSEEK_API_KEY=xxxxx
-
-# OpenAI
-NUXT_OPENAI_API_KEY=xxxxx
-```
 
 ## 📁 Project Structure
 
