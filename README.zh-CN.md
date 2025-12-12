@@ -1,14 +1,19 @@
 <div align="center">
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
-
 <img src="./public/logo.png" alt="Nuxt Mkdirs" width="120" />
 
 # Nuxt Mkdirs
 
 **开源的目录网站模板，基于 Nuxt 4 构建**
 
-[在线演示](https://demo.nuxt-mkdirs.com) 
+[![Nuxt](https://img.shields.io/badge/Nuxt-4.x-00DC82?style=flat-square&logo=nuxt.js)](https://nuxt.com)
+[![Vue](https://img.shields.io/badge/Vue-3.x-4FC08D?style=flat-square&logo=vue.js)](https://vuejs.org)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
+[在线演示](https://demo.nuxt-mkdirs.com) · [配置文档](#%EF%B8%8F-配置指南) · [提交 Issue](https://github.com/PBHAHAHA/Nuxt_Mkdirs/issues)
 
 </div>
 
@@ -53,8 +58,8 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/your-username/nuxt-mkdirs.git
-cd nuxt-mkdirs
+git clone https://github.com/PBHAHAHA/Nuxt_Mkdirs.git
+cd Nuxt_Mkdirs
 
 # 安装依赖
 pnpm install
@@ -77,6 +82,33 @@ pnpm build
 # 本地预览
 pnpm preview
 ```
+
+## 🚀 部署
+
+本项目使用 NuxtHub v0.10+ 和 Cloudflare Workers。
+
+> ⚠️ **注意**: NuxtHub Admin 部署方式将于 2024 年 12 月 31 日停用，请使用 Wrangler 进行部署。
+
+### 使用 Wrangler 部署
+
+1. 复制 wrangler 配置文件：
+
+```bash
+cp wrangler.example.jsonc wrangler.jsonc
+```
+
+2. 编辑 `wrangler.jsonc`，填入你的环境变量。
+
+3. 构建并部署：
+
+```bash
+pnpm build
+npx wrangler deploy
+```
+
+部署后网站地址为 `https://nuxt-mkdirs.<your-account>.workers.dev`。
+
+如需绑定自定义域名，请在 [Cloudflare Dashboard](https://dash.cloudflare.com/) > Workers & Pages > 你的项目 > Settings > Domains & Routes 中配置。
 
 ## ⚙️ 配置指南
 
@@ -236,7 +268,7 @@ nuxt-mkdirs/
 
 - ⭐ 给项目点个 Star
 - 📢 分享给更多人
-- ☕ [请作者喝杯咖啡](https://github.com/sponsors/your-username)
+- <a href="https://www.buymeacoffee.com/pubing967" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;" ></a>
 
 ## 📮 联系方式
 

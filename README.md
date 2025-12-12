@@ -1,14 +1,19 @@
 <div align="center">
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
-
 <img src="./public/logo.png" alt="Nuxt Mkdirs" width="120" />
 
 # Nuxt Mkdirs
 
 **Open-source directory website template built with Nuxt 4**
 
-[Live Demo](https://demo.nuxt-mkdirs.com) · 
+[![Nuxt](https://img.shields.io/badge/Nuxt-4.x-00DC82?style=flat-square&logo=nuxt.js)](https://nuxt.com)
+[![Vue](https://img.shields.io/badge/Vue-3.x-4FC08D?style=flat-square&logo=vue.js)](https://vuejs.org)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
+[Live Demo](https://demo.nuxt-mkdirs.com) · [Documentation](#-configuration-guide) · [Report Bug](https://github.com/PBHAHAHA/Nuxt_Mkdirs/issues)
 
 </div>
 
@@ -53,8 +58,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/nuxt-mkdirs.git
-cd nuxt-mkdirs
+git clone https://github.com/PBHAHAHA/Nuxt_Mkdirs.git
+cd Nuxt_Mkdirs
 
 # Install dependencies
 pnpm install
@@ -77,6 +82,33 @@ pnpm build
 # Preview locally
 pnpm preview
 ```
+
+## 🚀 Deployment
+
+This project uses NuxtHub v0.10+ with Cloudflare Workers.
+
+> ⚠️ **Note**: NuxtHub Admin deployment will be deprecated on December 31, 2024. Please use Wrangler for deployment.
+
+### Deploy with Wrangler
+
+1. Copy the wrangler configuration:
+
+```bash
+cp wrangler.example.jsonc wrangler.jsonc
+```
+
+2. Edit `wrangler.jsonc` and fill in your environment variables.
+
+3. Build and deploy:
+
+```bash
+pnpm build
+npx wrangler deploy
+```
+
+Your site will be deployed to `https://nuxt-mkdirs.<your-account>.workers.dev`.
+
+To use a custom domain, configure it in [Cloudflare Dashboard](https://dash.cloudflare.com/) > Workers & Pages > your project > Settings > Domains & Routes.
 
 ## ⚙️ Configuration Guide
 

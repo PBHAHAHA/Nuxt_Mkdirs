@@ -1,7 +1,13 @@
 node_modules
 .env
+.env.*
+!.env.example
+wrangler.jsonc
+!wrangler.example.jsonc
 .nuxt
+.output
 .data
+.wrangler
 mkdirs-template-main
 dist
 Nuxt_Mkdirs.zip

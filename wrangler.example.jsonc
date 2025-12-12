@@ -1,0 +1,73 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuxt-mkdirs",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-12-12",
+  "assets": {
+    "directory": "./.output/public/",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    // AI Provider: google | deepseek | openai
+    "NUXT_AI_PROVIDER": "google",
+
+    // GitHub OAuth - https://github.com/settings/developers
+    "NUXT_AUTH_GITHUB_CLIENT_ID": "",
+    "NUXT_AUTH_GITHUB_CLIENT_SECRET": "",
+
+    // Google OAuth - https://console.cloud.google.com/apis/credentials
+    "NUXT_AUTH_GOOGLE_CLIENT_ID": "",
+    "NUXT_AUTH_GOOGLE_CLIENT_SECRET": "",
+
+    // Auth Secret - generate with: openssl rand -base64 32
+    "NUXT_AUTH_SECRET": "",
+
+    // Creem Payment - https://creem.io
+    "NUXT_CREEM_API_KEY": "",
+    "NUXT_CREEM_TEST_MODE": "true",
+    "NUXT_CREEM_WEBHOOK_SECRET": "",
+
+    // AI API Keys (optional)
+    "NUXT_DEEPSEEK_API_KEY": "",
+    "NUXT_GOOGLE_AI_API_KEY": "",
+    "NUXT_OPENAI_API_KEY": "",
+
+    // Public App URL
+    "NUXT_PUBLIC_APP_URL": "https://your-domain.com",
+
+    // Creem Product IDs
+    "NUXT_PUBLIC_CREEM_PRO_PRODUCT_ID": "",
+    "NUXT_PUBLIC_CREEM_SPONSOR_PRODUCT_ID": "",
+
+    // Google Analytics (optional)
+    "NUXT_PUBLIC_GOOGLE_ANALYTICS_ID": "",
+
+    // Pagination
+    "NUXT_PUBLIC_ITEMS_PER_PAGE": "12",
+
+    // Sanity CMS - https://sanity.io
+    "NUXT_PUBLIC_SANITY_DATASET": "production",
+    "NUXT_PUBLIC_SANITY_PROJECT_ID": "",
+    "NUXT_SANITY_API_TOKEN": "",
+
+    // Stripe Payment (optional) - https://stripe.com
+    "NUXT_PUBLIC_STRIPE_PRO_PRICE_ID": "",
+    "NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "",
+    "NUXT_PUBLIC_STRIPE_SPONSOR_PRICE_ID": "",
+    "NUXT_STRIPE_SECRET_KEY": "",
+    "NUXT_STRIPE_WEBHOOK_SECRET": "",
+
+    // Feature Flags
+    "NUXT_PUBLIC_SUPPORT_CATEGORY_GROUP": "true",
+    "NUXT_PUBLIC_SUPPORT_ITEM_ICON": "true",
+
+    // Resend Email - https://resend.com
+    "NUXT_RESEND_API_KEY": "",
+    "NUXT_RESEND_AUDIENCE_ID": "",
+    "NUXT_RESEND_EMAIL_ADMIN": "",
+    "NUXT_RESEND_EMAIL_FROM": ""
+  }
+}

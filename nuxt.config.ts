@@ -3,9 +3,18 @@ import tailwindcss from '@tailwindcss/vite'
 
 // Trigger rebuild for config changes - TS installed
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: '2025-12-12',
   css: ['./app/assets/css/main.css'],
   devtools: { enabled: true },
+
+  // Cloudflare Workers configuration for NuxtHub v0.10
+  nitro: {
+    preset: 'cloudflare_module',
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+    },
+  },
   
   modules: [
     '@nuxthub/core',

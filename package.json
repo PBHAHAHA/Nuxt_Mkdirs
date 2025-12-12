@@ -15,7 +15,6 @@
     "@ai-sdk/openai": "^2.0.80",
     "@auth/core": "^0.34.2",
     "@internationalized/date": "^3.10.0",
-    "@nuxthub/core": "^0.8.27",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/sanity": "^2.0.0",
     "@nuxtjs/sitemap": "^7.4.8",
@@ -46,6 +45,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@nuxthub/core": "^0.10.1",
     "@sanity/client": "^6.21.3",
     "@sanity/code-input": "^6.0.3",
     "@sanity/dashboard": "^5.0.0",
@@ -57,6 +57,7 @@
     "sanity-plugin-asset-source-unsplash": "^4.0.1",
     "sanity-plugin-markdown": "^6.0.0",
     "sanity-plugin-media": "^4.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.54.0"
   }
 }
