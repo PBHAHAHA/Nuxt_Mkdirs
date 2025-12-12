@@ -101,6 +101,7 @@ export default defineNuxtConfig({
   },
 
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'Nuxt Mkdirs - The Best Directory Website Template for Nuxt',
       meta: [
