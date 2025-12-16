@@ -20,11 +20,18 @@ interface Props {
 defineProps<Props>();
 
 const config = useRuntimeConfig();
+const route = useRoute();
 const isSubmitting = ref(false);
 const isUploading = ref(false);
 const isAnalyzing = ref(false);
 const uploadError = ref('');
 const analyzeError = ref('');
+
+const pricePlanFromQuery = computed<'free' | 'pro' | 'sponsor'>(() => {
+  const plan = route.query.plan;
+  if (plan === 'pro' || plan === 'sponsor' || plan === 'free') return plan;
+  return 'free';
+});
 
 // Form data
 const formData = reactive({
@@ -155,6 +162,7 @@ async function handleSubmit() {
         introduction: formData.introduction,
         icon: formData.iconId || undefined,
         image: formData.imageId || undefined,
+        pricePlan: pricePlanFromQuery.value,
       },
     });
 
