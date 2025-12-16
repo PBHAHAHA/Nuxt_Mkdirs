@@ -62,7 +62,12 @@ const plans = [
   },
 ];
 
-const selectedPlan = ref('free');
+function normalizePlanId(planId: unknown): 'free' | 'pro' | 'sponsor' {
+  if (planId === 'pro' || planId === 'sponsor' || planId === 'free') return planId;
+  return 'free';
+}
+
+const selectedPlan = ref<'free' | 'pro' | 'sponsor'>(normalizePlanId(item.value?.pricePlan));
 const isProcessing = ref(false);
 
 // Free plan status

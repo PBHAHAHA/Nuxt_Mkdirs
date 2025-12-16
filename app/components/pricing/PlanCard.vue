@@ -17,6 +17,18 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+function getPlanIdFromTitle(title: string): 'free' | 'pro' | 'sponsor' {
+  const normalized = title.trim().toLowerCase();
+  if (normalized === 'pro') return 'pro';
+  if (normalized === 'sponsor') return 'sponsor';
+  return 'free';
+}
+
+function handleAction() {
+  const plan = getPlanIdFromTitle(props.plan.title);
+  navigateTo({ path: '/submit', query: { plan } });
+}
 </script>
 
 <template>
@@ -51,7 +63,7 @@ const props = defineProps<Props>();
 
       <!-- Price plan features and limitations -->
       <div class="flex flex-col flex-grow px-6 py-8">
-        <div class="flex-grow space-y-4">
+        <div class="grow space-y-4">
           <div class="grid grid-cols-1 gap-4 text-left text-sm leading-normal">
             <!-- Benefits -->
             <div v-for="feature in plan.benefits" :key="feature" class="flex items-start gap-x-4">
@@ -72,6 +84,7 @@ const props = defineProps<Props>();
           <UiButton
             :variant="plan.isPopular ? 'default' : 'outline'"
             class="w-full"
+            @click="handleAction"
           >
             {{ plan.price === 0 ? 'Get Started' : 'Subscribe' }}
           </UiButton>
